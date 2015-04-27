@@ -131,7 +131,6 @@ module Apate
 
     def invert
       ai = Matrix.create_empty rows, cols
-
     end
 
     def print

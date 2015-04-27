@@ -1,6 +1,7 @@
 # Apate
+# Apate [![Build Status](https://travis-ci.org/Albin-trialbee/Apate.svg?branch=master)](https://travis-ci.org/Albin-trialbee/Apate)
 
-TODO: Write a gem description
+A small gem that provides matrix and array methods that can be used in statistical computing.
 
 ## Installation
 

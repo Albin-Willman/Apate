@@ -1,10 +1,8 @@
 require 'spec_helper'
 
 describe Apate do
-
-
   it 'should be able to multiply 2 arrays' do
-    res = Apate.scalar_product [3,2,1], [3,2,1]
+    res = Apate.scalar_product([3,2,1], [3,2,1])
     expect(res).to eq(14)
   end
 
@@ -14,8 +12,7 @@ describe Apate do
 
     res.each_with_index do |r, i|
       expect(r).to eq(expected[i])
-    end 
-
+    end
   end
 
   it 'should be able to add a value ta an array' do
@@ -24,8 +21,7 @@ describe Apate do
 
     res.each_with_index do |r, i|
       expect(r).to eq(expected[i])
-    end 
-
+    end
   end
 
   it 'should be able to multiply an array with an scalar' do
@@ -34,7 +30,7 @@ describe Apate do
 
     res.each_with_index do |r, i|
       expect(r).to eq(expected[i])
-    end 
+    end
   end
 
   it 'should be able to divide an array by an scalar' do
@@ -43,7 +39,7 @@ describe Apate do
 
     res.each_with_index do |r, i|
       expect(r).to eq(expected[i])
-    end 
+    end
   end
 
   it 'should be able to raise each element in an array to a power' do
@@ -60,10 +56,5 @@ describe Apate do
     res.each_with_index do |r, i|
       expect(r).to eq(expected[i])
     end
-
-
-
-  end 
-
-
+  end
 end

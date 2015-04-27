@@ -28,10 +28,8 @@ module Apate
     x.each_with_index do |xi, i|
       value += xi*y[i]
     end
-
     value
   end
-
 
   private
 

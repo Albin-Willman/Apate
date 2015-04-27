@@ -1,6 +1,5 @@
 module Apate
 
-
   def self.matrix_multiply(a, b)
     am = Matrix.new(a)
     bm = Matrix.new(b)
@@ -89,7 +88,6 @@ module Apate
 
     def * b
       c = Matrix.create_empty rows, b.cols
-
       data.each_with_index do |row, row_i|
         b.get_columns.each_with_index do |col, col_i|
           c.set(row_i, col_i, Apate.scalar_product(row, col))
@@ -99,40 +97,54 @@ module Apate
     end
 
     def determinant
-      return nil unless rows == cols
+      fail 'Non square matrix' unless rows == cols
       return data[0][0] if rows == 1
       det = 0
 
       data.each_with_index do |_, row_i|
-        b = get_sub_matrix_without_row_and_col row_i, 0
+        cell = get(row_i, 0)
+        next if cell == 0
+        b = get_sub_matrix_without_row_and_col0(row_i)
         b_det = b.determinant
-
-
-        det += ((-1)**row_i)*get(row_i, 0)*b_det
-      end
-      puts "rows: #{rows}, subdet: #{det}"
-      if rows == 2 && det == 1
-        puts data
+        det += ((-1)**row_i)*cell*b_det
       end
       det
     end
 
-    def get_sub_matrix_without_row_and_col row, col
+    def get_sub_matrix_without_row_and_col0(row)
       b = Matrix.create_empty rows-1, cols-1
       ranges = get_range_pair rows, row
-
-      b.data = data[0..(row-1)][1..cols-1] + data[(row+1)..(rows-1)][1..cols-1]
-      puts "row: #{row}, col: #{col}, data: #{data}, sub_data: #{b.data}"
+      if ranges[:first] && ranges[:second]
+        b.data = sub_matrix(1..cols-1, ranges[:first])
+        b.append_cols(sub_matrix(1..cols-1, ranges[:second]))
+      elsif ranges[:first]
+        b.data = sub_matrix(1..cols-1, ranges[:first])
+      elsif ranges[:second]
+        b.data = sub_matrix(1..cols-1, ranges[:second])
+      end
       b
+    end
+
+    def sub_matrix(col_range, row_range)
+      data[col_range].map { |c| c[row_range] }
     end
 
     def invert
       ai = Matrix.create_empty rows, cols
 
+    end
 
+    def print
+      data.each do |row|
+        puts "| #{row.join(' | ')} |\n"
+        puts '-'*cols*3
+      end
+    end
 
-
-
+    def append_cols(append_data)
+      data.each_with_index do |row, i|
+        data[i] = row + append_data[i]
+      end
     end
 
     private
@@ -144,7 +156,7 @@ module Apate
         if index == 0
           pair[:second] = (1..real_max)
         elsif index == (real_max)
-          pair[:first] = (0..real_max-2)
+          pair[:first] = (0..real_max-1)
         else
           pair[:first] = (0..index-1)
           pair[:second] = (index+1..real_max)

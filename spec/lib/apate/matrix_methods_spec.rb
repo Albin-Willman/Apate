@@ -25,6 +25,32 @@ describe Apate do
 
   end
 
+  it 'should be able to invert a matrix' do
+    a = [[1,2],[2,1]]
+
+    res = Apate.invert_matrix a
+
+    expected = [[1,0], [0,1]]
+
+    expect(res).to eq(expected)
+
+  end
+
+  it 'should be able to compute the determinant of a matrix' do
+
+    a = [[1,0,0],[0,0,1],[0,1,0]]
+    #res = Apate.determinant a
+
+    #expect(res).to eq(1)
+
+    a = [[1,1,1],[1,1,1],[1,1,1]]
+    res = Apate.determinant a
+
+    expect(res).to eq(0)
+
+
+  end
+
 
   it 'should be able to add 2 2x2 matrices' do
     a = [[1,0], [0,1]]

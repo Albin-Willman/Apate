@@ -15,6 +15,19 @@ module Apate
     (am+bm).data
   end
 
+  def self.invert_matrix(a)
+    am = Matrix.new(a)
+    am.invert.data
+  end
+
+
+  def self.determinant(a)
+    am = Matrix.new(a)
+    det = am.determinant
+
+    det
+  end
+
   class Matrix
 
     def self.create_empty(rows, cols)
@@ -30,6 +43,10 @@ module Apate
 
     def data
       @data
+    end
+
+    def data= d
+      @data = d
     end
 
     def rows
@@ -60,7 +77,7 @@ module Apate
     end
 
     def + b
-      c = Matrix.create_empty rows, b.cols
+      c = Matrix.create_empty rows, cols
 
       data.each_with_index do |row, row_i|
         b.get_columns.each_with_index do |col, col_i|
@@ -80,6 +97,60 @@ module Apate
       end
       c
     end
+
+    def determinant
+      return nil unless rows == cols
+      return data[0][0] if rows == 1
+      det = 0
+
+      data.each_with_index do |_, row_i|
+        b = get_sub_matrix_without_row_and_col row_i, 0
+        b_det = b.determinant
+
+
+        det += ((-1)**row_i)*get(row_i, 0)*b_det
+      end
+      puts "rows: #{rows}, subdet: #{det}"
+      if rows == 2 && det == 1
+        puts data
+      end
+      det
+    end
+
+    def get_sub_matrix_without_row_and_col row, col
+      b = Matrix.create_empty rows-1, cols-1
+      ranges = get_range_pair rows, row
+
+      b.data = data[0..(row-1)][1..cols-1] + data[(row+1)..(rows-1)][1..cols-1]
+      puts "row: #{row}, col: #{col}, data: #{data}, sub_data: #{b.data}"
+      b
+    end
+
+    def invert
+      ai = Matrix.create_empty rows, cols
+
+
+
+
+
+    end
+
+    private
+
+      def get_range_pair(max, index)
+        return if max == 0 || index >= max
+        pair = {first: nil, second: nil}
+        real_max = max-1
+        if index == 0
+          pair[:second] = (1..real_max)
+        elsif index == (real_max)
+          pair[:first] = (0..real_max-2)
+        else
+          pair[:first] = (0..index-1)
+          pair[:second] = (index+1..real_max)
+        end
+        pair
+      end
 
   end
 end

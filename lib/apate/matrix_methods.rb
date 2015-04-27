@@ -135,10 +135,12 @@ module Apate
     end
 
     def print
+      ret = '-'*(cols*4 + 1) + "\n"
       data.each do |row|
-        puts "| #{row.join(' | ')} |\n"
-        puts '-'*cols*3
+        ret += "| #{row.join(' | ')} |\n"
+        ret += '-'*(cols*4 + 1) + "\n"
       end
+      ret
     end
 
     def append_cols(append_data)

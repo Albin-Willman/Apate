@@ -75,4 +75,10 @@ describe Apate do
     expect(res.first.length).to eq(2)
     expect(res).to eq(c)
   end
+
+  it 'can print it self' do
+    a = [[1,0], [0,1]]
+    res = Apate::Matrix.new(a).print
+    expect(res).to eq("---------\n| 1 | 0 |\n---------\n| 0 | 1 |\n---------\n")
+  end
 end

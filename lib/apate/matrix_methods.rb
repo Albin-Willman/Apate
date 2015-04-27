@@ -34,7 +34,7 @@ module Apate
       Matrix.new(arr)
     end
 
-    def initialize arr
+    def initialize(arr)
       @rows = arr.length
       @cols = arr[0].length
       @data = arr
@@ -44,7 +44,7 @@ module Apate
       @data
     end
 
-    def data= d
+    def data=(d)
       @data = d
     end
 
@@ -56,12 +56,12 @@ module Apate
       @cols
     end
 
-    def set row, col, value
+    def set(row, col, value)
       return nil if row >= @rows || col >= cols
       @data[row][col] = value
     end
 
-    def get row, col
+    def get(row, col)
       @data[row][col]
     end
 
@@ -75,7 +75,7 @@ module Apate
       columns
     end
 
-    def + b
+    def +(b)
       c = Matrix.create_empty rows, cols
 
       data.each_with_index do |row, row_i|
@@ -86,7 +86,7 @@ module Apate
       c
     end
 
-    def * b
+    def *(b)
       c = Matrix.create_empty rows, b.cols
       data.each_with_index do |row, row_i|
         b.get_columns.each_with_index do |col, col_i|
@@ -163,6 +163,5 @@ module Apate
         end
         pair
       end
-
   end
 end
